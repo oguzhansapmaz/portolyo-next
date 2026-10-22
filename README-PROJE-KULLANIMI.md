@@ -1,6 +1,6 @@
 # Oğuzhan Sapmaz Portföyü — Proje ve Makale Yönetimi
 
-Bu paket mevcut HTML/CSS/JavaScript portföy tasarımını `public/portfolio/` altında korur. Ana sayfa `/portfolio/index.html` adresine yönlendirilir; eski tasarımın CSS ve JavaScript dosyaları aynı statik sayfada çalışır. Yönetim paneli Next.js App Router, Neon PostgreSQL ve sunucu tarafı işlemlerle çalışır.
+Bu paket mevcut HTML/CSS/JavaScript portföy tasarımını `public/portfolio/` altında korur.  Bu paket mevcut HTML/CSS/JavaScript portföy tasarımını `public/portfolio/` altında korur. Ana sayfa (`/`), `/portfolio/index.html` dosyasını bir iframe içinde gösterir. Statik tasarımın CSS ve JavaScript dosyaları `public/portfolio/` altında bulunur. Yönetim paneli Next.js App Router, Neon PostgreSQL ve sunucu tarafı işlemlerle çalışır.
 
 ## Kurulum
 
@@ -50,8 +50,7 @@ Yayımlanmış projeler `/api/icerik` üzerinden eski portföyün proje kartlar�
 
 ## Tasarım varlıkları hakkında
 
-Gönderilen arşivde `profile.png`, `kedivideo.mp4` ve `dünya.png` dosyalarına HTML/CSS içinden referans vardı ancak bu varlıkların kendileri arşivde bulunmuyordu. Kaynak tasarımın düzenini değiştirmemek için stiller korunmuştur; bu görseller/video görünmüyorsa orijinal dosyaları `public/portfolio/` klasörüne aynı adlarla ekleyin.
-
+Portföy tasarımında kullanılan `profile.png`, `kedivideo.mp4` ve `dünya.png` dosyaları `public/portfolio/` klasöründe tutulur. Bu dosyalar profil görseli, hareketli logo ve dünya haritası arka planı için kullanılır. Görsellerin ve videonun yüklenebilmesi için dosya adları ve kod içindeki referansları birbiriyle eşleşmelidir.
 
 ## Son tasarım düzenlemesi
 
