@@ -1,5 +1,4 @@
-import { redirect } from "next/navigation";
 
 export default function Home() {
-  redirect("/portfolio/index.html");
+  return null;
 }
