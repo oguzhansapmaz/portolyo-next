@@ -15,7 +15,7 @@ export default async function AdminPage() {
     sql`SELECT COUNT(*)::int AS okunmamis FROM iletisim_mesajlari WHERE okundu=FALSE`
   ]);
   return <main style={page}>
-    <a href="/portfolio/index.html" style={link}>← Portföyü görüntüle</a>
+    <a href="/" style={link}>← Portföyü görüntüle</a>
     <h1>Portföy Yönetim Paneli</h1><p>Projelerini ve teknik yazılarını buradan yönet.</p>
     <section style={grid}>
       <article style={card}><h2>Projeler</h2><p>Aktif kayıt: {projeler[0].toplam}</p><a href="/admin/projeler" style={link}>Projeleri yönet →</a></article>
