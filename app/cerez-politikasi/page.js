@@ -1,10 +1,17 @@
+import { sql } from "../../lib/db";
 export const metadata = {
   title: "Gizlilik, KVKK ve Çerez Politikası",
   description:
     "Portföy sitesi, iletişim formu, kişisel verilerin korunması ve çerez kullanımı hakkında bilgilendirme.",
 };
 
-export default function CerezPolitikasiPage() {
+export default async function CerezPolitikasiPage() {
+  const cerezler = await sql`
+    SELECT ad, tur, amac, sure
+    FROM cerezler
+    ORDER BY tur, ad
+  `;
+
   return (
     <div style={background}>
       <main style={page}>
@@ -77,25 +84,37 @@ export default function CerezPolitikasiPage() {
           </p>
         </section>
 
-        <section style={section}>
-          <h2>5. Çerez kullanımı</h2>
-          <p>
-            Yönetici panelinde oturumun sürdürülmesi amacıyla bir oturum
-            çerezi kullanılabilir. Bu çerezin amacı, yönetici girişinin
-            ardından oturumun devam etmesini sağlamaktır.
-          </p>
-          <p>
-            Çerezin HttpOnly, Secure ve SameSite gibi güvenlik özellikleri
-            uygulamanın yapılandırmasına bağlıdır. Bu özelliklerin etkinliği
-            yayına alma öncesinde kontrol edilmelidir.
-          </p>
-          <p>
-            Bu metin hazırlanırken uygulamanın mevcut sürümünde reklam veya
-            pazarlama çerezlerinin eklenmediği belirtilmiştir. İleride
-            analiz, reklam ya da başka üçüncü taraf çerezleri eklenirse
-            politika güncellenmelidir.
-          </p>
-        </section>
+<section style={section}>
+  <h2>5. Çerez kullanımı</h2>
+
+  <p>
+    Yönetici panelinde oturumun sürdürülmesi amacıyla bir oturum
+    çerezi kullanılabilir. Bu çerezin amacı, yönetici girişinin
+    ardından oturumun devam etmesini sağlamaktır.
+  </p>
+
+  <p>
+    Çerezin HttpOnly, Secure ve SameSite gibi güvenlik özellikleri
+    uygulamanın yapılandırmasına bağlıdır. Bu özelliklerin etkinliği
+    yayına alma öncesinde kontrol edilmelidir.
+  </p>
+
+  <p>
+    Bu sitede kullanılan çerezler veritabanındaki kayıtlardan
+    listelenmektedir.
+  </p>
+
+  <ul style={list}>
+    {cerezler.map((cerez) => (
+      <li key={cerez.ad}>
+        <strong>{cerez.ad}</strong>
+        {" — Tür: "}{cerez.tur}
+        {" — Amaç: "}{cerez.amac || "Belirtilmemiş"}
+        {" — Süre: "}{cerez.sure || "Belirtilmemiş"}
+      </li>
+    ))}
+  </ul>
+</section>
 
         <section style={section}>
           <h2>6. Üçüncü taraf hizmetler</h2>
