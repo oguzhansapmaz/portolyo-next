@@ -152,3 +152,127 @@ function escapeHtml(value) {
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
     }[char]));
 }
+// PORTFOLIO_LANGUAGE_CONSENT_MODULE
+// Dil kayÄ±tlarÄ± yalnÄ±zca /api/icerik API'sinin yayÄ±nda ve soft-delete edilmemiÅŸ
+// olarak dÃ¶ndÃ¼rdÃ¼ÄŸÃ¼ satÄ±rlardan Ã§izilir.
+(async function loadLanguageSections() {
+  const languageGrid = document.getElementById("languages-grid");
+  const featuredGrid = document.getElementById("featured-languages-grid");
+  if (!languageGrid || !featuredGrid) return;
+
+  const emptyMessage = (message) => `<p class="article-empty">${escapeHtml(message)}</p>`;
+  const dateText = (value) => {
+    if (!value) return "";
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? "" : date.toLocaleDateString("tr-TR");
+  };
+  const card = (item, index, featured) => {
+    const details = [];
+    if (item.sinav_adi) details.push(item.sinav_adi);
+    if (item.sinav_puani !== null && item.sinav_puani !== undefined) {
+      details.push(`Puan: ${Number(item.sinav_puani).toLocaleString("tr-TR")}`);
+    }
+    const examDate = dateText(item.sinav_tarihi);
+    if (examDate) details.push(examDate);
+    return `<article class="project-card">
+      <div class="project-top"><span>${featured ? "Ã–NE Ã‡IKAN" : String(index + 1).padStart(2, "0")}</span><span>${escapeHtml(item.seviye || "Seviye belirtilmemiÅŸ")}</span></div>
+      <h3>${escapeHtml(item.dil)}</h3>
+      <p>${featured ? "SÄ±nav baÅŸarÄ±sÄ±" : "YabancÄ± dil seviyesi"}${details.length ? ` Â· ${details.map(escapeHtml).join(" Â· ")}` : " Â· SÄ±nav bilgisi belirtilmemiÅŸ"}</p>
+    </article>`;
+  };
+
+  try {
+    const response = await fetch("/api/icerik", { cache: "no-store" });
+    if (!response.ok) throw new Error(`Ä°Ã§erik API HTTP ${response.status}`);
+    const data = await response.json();
+    const diller = Array.isArray(data.diller) ? data.diller : [];
+    const featured = Array.isArray(data.oneCikanDiller) ? data.oneCikanDiller : [];
+    languageGrid.innerHTML = diller.length
+      ? diller.map((item, index) => card(item, index, false)).join("")
+      : emptyMessage("HenÃ¼z yayÄ±mlanmÄ±ÅŸ dil kaydÄ± bulunmuyor. KayÄ±tlarÄ± yÃ¶netim panelinden ekleyip yayÄ±nlayabilirsin.");
+    featuredGrid.innerHTML = featured.length
+      ? featured.map((item, index) => card(item, index, true)).join("")
+      : emptyMessage("HenÃ¼z yayÄ±mlanmÄ±ÅŸ sÄ±nav puanÄ± bulunmuyor.");
+  } catch (error) {
+    console.warn("YabancÄ± dil kayÄ±tlarÄ± yÃ¼klenemedi.", error);
+    languageGrid.innerHTML = emptyMessage("Dil bilgileri ÅŸu anda yÃ¼klenemiyor.");
+    featuredGrid.innerHTML = emptyMessage("Ã–ne Ã§Ä±kan sÄ±nav sonuÃ§larÄ± ÅŸu anda yÃ¼klenemiyor.");
+  }
+})();
+
+// Google Analytics only starts after the visitor explicitly accepts analytics cookies.
+(function setupAnalyticsConsent() {
+  const key = "portfolio-analytics-consent-v1";
+  const measurementId = "G-DGVYG3122M";
+
+  function loadAnalytics() {
+    if (window.__portfolioAnalyticsLoaded) return;
+    window.__portfolioAnalyticsLoaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+    window.gtag("js", new Date());
+    window.gtag("config", measurementId);
+    const analyticsScript = document.createElement("script");
+    analyticsScript.async = true;
+    analyticsScript.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+    document.head.appendChild(analyticsScript);
+  }
+
+  let storedChoice = null;
+  try { storedChoice = window.localStorage.getItem(key); } catch { /* storage may be blocked */ }
+  if (storedChoice === "accepted") {
+    loadAnalytics();
+    return;
+  }
+  if (storedChoice === "rejected") return;
+
+  const banner = document.createElement("aside");
+  banner.id = "analytics-consent-banner";
+  banner.setAttribute("role", "dialog");
+  banner.setAttribute("aria-label", "Ã‡erez tercihi");
+  banner.style.cssText = "position:fixed;left:16px;right:16px;bottom:16px;z-index:999999;max-width:900px;margin:0 auto;padding:18px;border:1px solid #5b3b88;border-radius:16px;background:#0b0b12;color:#f5f3ff;box-shadow:0 12px 40px rgba(0,0,0,.5);display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;font:14px/1.5 system-ui,sans-serif";
+
+  const copy = document.createElement("div");
+  copy.style.cssText = "flex:1;min-width:220px";
+  const heading = document.createElement("strong");
+  heading.textContent = "Ã‡erez tercihin";
+  heading.style.cssText = "display:block;margin-bottom:4px;color:#c4b5fd;font-size:16px";
+  const message = document.createElement("p");
+  message.textContent = "Zorunlu oturum Ã§erezleri siteyi Ã§alÄ±ÅŸtÄ±rmak iÃ§in kullanÄ±lÄ±r. Google Analytics analitik Ã§erezleri yalnÄ±zca kabul edersen etkinleÅŸtirilir. Tercihini daha sonra tarayÄ±cÄ± depolamasÄ±nÄ± temizleyerek sÄ±fÄ±rlayabilirsin.";
+  message.style.cssText = "margin:0;color:#d1d1dc";
+  copy.append(heading, message);
+
+  const actions = document.createElement("div");
+  actions.style.cssText = "display:flex;gap:8px;flex-wrap:wrap";
+  function makeButton(label, primary) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = label;
+    button.style.cssText = `border:1px solid ${primary ? "#a78bfa" : "#595568"};border-radius:9px;padding:10px 13px;background:${primary ? "#a78bfa" : "transparent"};color:${primary ? "#100a1e" : "#f5f3ff"};font-weight:700;cursor:pointer`;
+    return button;
+  }
+  function clearAnalyticsCookies() {
+    document.cookie.split(";").forEach((part) => {
+      const name = part.split("=")[0].trim();
+      if (name === "_ga" || name === "_gid" || name === "_gat" || name.startsWith("_ga_")) {
+        document.cookie = `${name}=; Max-Age=0; path=/`;
+        document.cookie = `${name}=; Max-Age=0; path=/; domain=.oguzhansapmaz.com`;
+      }
+    });
+  }
+  const rejectButton = makeButton("AnalitiÄŸi reddet", false);
+  const acceptButton = makeButton("Kabul et", true);
+  rejectButton.addEventListener("click", () => {
+    try { window.localStorage.setItem(key, "rejected"); } catch { /* choice still applies for this view */ }
+    clearAnalyticsCookies();
+    banner.remove();
+  });
+  acceptButton.addEventListener("click", () => {
+    try { window.localStorage.setItem(key, "accepted"); } catch { /* choice still applies for this view */ }
+    banner.remove();
+    loadAnalytics();
+  });
+  actions.append(rejectButton, acceptButton);
+  banner.append(copy, actions);
+  document.body.appendChild(banner);
+})();
