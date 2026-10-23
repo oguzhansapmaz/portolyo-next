@@ -153,8 +153,8 @@ function escapeHtml(value) {
     }[char]));
 }
 // PORTFOLIO_LANGUAGE_CONSENT_MODULE
-// Dil kayÄ±tlarÄ± yalnÄ±zca /api/icerik API'sinin yayÄ±nda ve soft-delete edilmemiÅŸ
-// olarak dÃ¶ndÃ¼rdÃ¼ÄŸÃ¼ satÄ±rlardan Ã§izilir.
+// Dil kayıtları yalnızca /api/icerik API'sinin yayında ve soft-delete edilmemiş
+// olarak döndürdüğü satırlardan çizilir.
 (async function loadLanguageSections() {
   const languageGrid = document.getElementById("languages-grid");
   const featuredGrid = document.getElementById("featured-languages-grid");
@@ -175,15 +175,15 @@ function escapeHtml(value) {
     const examDate = dateText(item.sinav_tarihi);
     if (examDate) details.push(examDate);
     return `<article class="project-card">
-      <div class="project-top"><span>${featured ? "Ã–NE Ã‡IKAN" : String(index + 1).padStart(2, "0")}</span><span>${escapeHtml(item.seviye || "Seviye belirtilmemiÅŸ")}</span></div>
+      <div class="project-top"><span>${featured ? "ÖNE ÇIKAN" : String(index + 1).padStart(2, "0")}</span><span>${escapeHtml(item.seviye || "Seviye belirtilmemiş")}</span></div>
       <h3>${escapeHtml(item.dil)}</h3>
-      <p>${featured ? "SÄ±nav baÅŸarÄ±sÄ±" : "YabancÄ± dil seviyesi"}${details.length ? ` Â· ${details.map(escapeHtml).join(" Â· ")}` : " Â· SÄ±nav bilgisi belirtilmemiÅŸ"}</p>
+      <p>${featured ? "Sınav başarısı" : "Yabancı dil seviyesi"}${details.length ? ` · ${details.map(escapeHtml).join(" · ")}` : " · Sınav bilgisi belirtilmemiş"}</p>
     </article>`;
   };
 
   try {
     const response = await fetch("/api/icerik", { cache: "no-store" });
-    if (!response.ok) throw new Error(`Ä°Ã§erik API HTTP ${response.status}`);
+    if (!response.ok) throw new Error(`İçerik API HTTP ${response.status}`);
     const data = await response.json();
     const diller = Array.isArray(data.diller) ? data.diller : [];
     const featured = Array.isArray(data.oneCikanDiller) ? data.oneCikanDiller : [];
@@ -194,9 +194,9 @@ function escapeHtml(value) {
       ? featured.map((item, index) => card(item, index, true)).join("")
       : emptyMessage("HenÃ¼z yayÄ±mlanmÄ±ÅŸ sÄ±nav puanÄ± bulunmuyor.");
   } catch (error) {
-    console.warn("YabancÄ± dil kayÄ±tlarÄ± yÃ¼klenemedi.", error);
-    languageGrid.innerHTML = emptyMessage("Dil bilgileri ÅŸu anda yÃ¼klenemiyor.");
-    featuredGrid.innerHTML = emptyMessage("Ã–ne Ã§Ä±kan sÄ±nav sonuÃ§larÄ± ÅŸu anda yÃ¼klenemiyor.");
+    console.warn("Yabancı dil kayıtları yüklenemedi.", error);
+    languageGrid.innerHTML = emptyMessage("Dil bilgileri şu anda yüklenemiyor.");
+    featuredGrid.innerHTML = emptyMessage("Öne çıkan sınav sonuçları şu anda yüklenemiyor.");
   }
 })();
 
@@ -229,7 +229,7 @@ function escapeHtml(value) {
   const banner = document.createElement("aside");
   banner.id = "analytics-consent-banner";
   banner.setAttribute("role", "dialog");
-  banner.setAttribute("aria-label", "Ã‡erez tercihi");
+  banner.setAttribute("aria-label", "Çerez tercihi");
   banner.style.cssText = "position:fixed;left:16px;right:16px;bottom:16px;z-index:999999;max-width:900px;margin:0 auto;padding:18px;border:1px solid #5b3b88;border-radius:16px;background:#0b0b12;color:#f5f3ff;box-shadow:0 12px 40px rgba(0,0,0,.5);display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;font:14px/1.5 system-ui,sans-serif";
 
   const copy = document.createElement("div");
