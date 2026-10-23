@@ -235,10 +235,10 @@ function escapeHtml(value) {
   const copy = document.createElement("div");
   copy.style.cssText = "flex:1;min-width:220px";
   const heading = document.createElement("strong");
-  heading.textContent = "Ã‡erez tercihin";
+  heading.textContent = "Çerez tercihin";
   heading.style.cssText = "display:block;margin-bottom:4px;color:#c4b5fd;font-size:16px";
   const message = document.createElement("p");
-  message.textContent = "Zorunlu oturum Ã§erezleri siteyi Ã§alÄ±ÅŸtÄ±rmak iÃ§in kullanÄ±lÄ±r. Google Analytics analitik Ã§erezleri yalnÄ±zca kabul edersen etkinleÅŸtirilir. Tercihini daha sonra tarayÄ±cÄ± depolamasÄ±nÄ± temizleyerek sÄ±fÄ±rlayabilirsin.";
+  message.textContent = "Zorunlu oturum çerezleri siteyi çalıştırmak için kullanılır. Google Analytics analitik çerezleri yalnızca kabul edersen etkinleştirilir. Tercihini daha sonra tarayıcı depolamasını temizleyerek sıfırlayabilirsin.";
   message.style.cssText = "margin:0;color:#d1d1dc";
   copy.append(heading, message);
 
@@ -260,7 +260,7 @@ function escapeHtml(value) {
       }
     });
   }
-  const rejectButton = makeButton("AnalitiÄŸi reddet", false);
+  const rejectButton = makeButton("Reddet", false);
   const acceptButton = makeButton("Kabul et", true);
   rejectButton.addEventListener("click", () => {
     try { window.localStorage.setItem(key, "rejected"); } catch { /* choice still applies for this view */ }
