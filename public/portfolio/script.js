@@ -1,4 +1,4 @@
-// Terminal açılışı kaldırıldı; site doğrudan açılır.
+﻿// Terminal açılışı kaldırıldı; site doğrudan açılır.
 // Navbar bağlantılarını ilgili bölümlere götür
 document.querySelectorAll('.nav-links a').forEach(link => {
 
@@ -189,10 +189,10 @@ function escapeHtml(value) {
     const featured = Array.isArray(data.oneCikanDiller) ? data.oneCikanDiller : [];
     languageGrid.innerHTML = diller.length
       ? diller.map((item, index) => card(item, index, false)).join("")
-      : emptyMessage("HenÃ¼z yayÄ±mlanmÄ±ÅŸ dil kaydÄ± bulunmuyor. KayÄ±tlarÄ± yÃ¶netim panelinden ekleyip yayÄ±nlayabilirsin.");
+      : emptyMessage("Henüz yayımlanmış dil kaydı bulunmuyor. Kayıtları yönetim panelinden ekleyip yayınlayabilirsin.");
     featuredGrid.innerHTML = featured.length
       ? featured.map((item, index) => card(item, index, true)).join("")
-      : emptyMessage("HenÃ¼z yayÄ±mlanmÄ±ÅŸ sÄ±nav puanÄ± bulunmuyor.");
+      : emptyMessage("Henüz yayımlanmış sınav puanı bulunmuyor.");
   } catch (error) {
     console.warn("Yabancı dil kayıtları yüklenemedi.", error);
     languageGrid.innerHTML = emptyMessage("Dil bilgileri şu anda yüklenemiyor.");

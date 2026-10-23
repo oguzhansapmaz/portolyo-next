@@ -1,4 +1,4 @@
-import { sql } from "@/lib/db";
+﻿import { sql } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
@@ -29,7 +29,7 @@ export async function GET() {
       { headers: { "Cache-Control": "no-store, max-age=0" } }
     );
   } catch (error) {
-    console.error("PortfÃ¶y iÃ§erikleri API hatasÄ±:", error);
+    console.error("Portföy içerikleri API hatası:", error);
     return Response.json(
       { projeler: [], makaleler: [], diller: [], oneCikanDiller: [] },
       { status: 500, headers: { "Cache-Control": "no-store, max-age=0" } }
