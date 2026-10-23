@@ -2475,4 +2475,61 @@ body::before {
     transform: none !important;
     transition: none !important;
   }
+  /* Yabancı dil bölümü - ortalanmış düzen */
+#languages {
+    min-height: 70vh;
+    padding: 140px 8%;
+    position: relative;
+    scroll-margin-top: 90px;
+}
+
+#languages .projects-header {
+    max-width: 850px;
+    margin: 0 auto 55px;
+    text-align: center;
+}
+
+#languages .projects-header h2 {
+    font-size: clamp(36px, 4vw, 52px);
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+#languages .projects-header > p:last-child {
+    color: #999;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+#languages .projects-grid {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto 70px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#languages .article-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 25px;
+    color: #aaa;
+    line-height: 1.8;
+    background: rgba(139, 92, 246, 0.04);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 14px;
+}
+
+@media (max-width: 768px) {
+    #languages {
+        padding: 110px 20px;
+    }
+
+    #languages .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #languages .projects-header h2 {
+        font-size: 36px;
+    }
+}
 }
