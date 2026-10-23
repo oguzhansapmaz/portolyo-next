@@ -2533,3 +2533,33 @@ body::before {
     }
 }
 }
+/* Dil bölümünü yazılar bölümüyle aynı hizada tut */
+#languages {
+    width: 80% !important;
+    max-width: 1530px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box !important;
+}
+
+#languages .projects-header,
+#languages .projects-grid {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+}
+
+#languages .projects-header {
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    #languages {
+        width: calc(100% - 40px) !important;
+        padding-top: 100px !important;
+        padding-bottom: 100px !important;
+    }
+}
